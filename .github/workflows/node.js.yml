@@ -34,10 +34,15 @@ jobs:
       shell: bash
 
     # Step 7: Upload the ZIP file as a Release asset
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
+    - name: Create GitHub Release
+      uses: ncipollo/release-action@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./new-tab-${{ github.ref_name }}.zip
-        asset_name: new-tab-${{ github.ref_name }}.zip
-        asset_content_type: application/zip
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+        name: Release ${{ github.ref_name }}
+        body: |
+          This release includes the latest build for tag ${{ github.ref_name }}.
+        draft: false
+        prerelease: false
+        artifacts: ./new-tab-${{ github.ref_name }}.zip
+        artifact_name: new-tab-${{ github.ref_name }}.zip
