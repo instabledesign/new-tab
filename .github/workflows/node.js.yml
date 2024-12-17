@@ -31,19 +31,6 @@ jobs:
                     zip -r new-tab-${{ github.ref_name }}.zip ./dist  # Create zip of the 'dist' folder (make sure it's present)
                 shell: bash
 
-            # Step 6: Create a GitHub Release and upload the ZIP file
-            -   name: Create GitHub Release
-                id: create_release  # Give the step an id to reference it later
-                uses: ncipollo/release-action@v1
-                with:
-                    token: ${{ secrets.GITHUB_TOKEN }}
-                    tag: ${{ github.ref_name }}  # Use the branch name or tag for release
-                    name: Release ${{ github.ref_name }}  # Use the branch/tag name in the release
-                    body: |
-                        This release includes the latest build for tag ${{ github.ref_name }}.
-                    draft: false
-                    prerelease: false
-
             # Step 7: Upload the ZIP file as a release asset
             -   name: Create GitHub Release and Upload Asset
                 uses: softprops/action-gh-release@v1
