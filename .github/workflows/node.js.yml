@@ -10,12 +10,6 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
-        permissions:
-            contents: write   # Allow write permissions for the repository contents
-            actions: write    # Allow writing to actions (e.g., uploading assets)
-            releases: write   # Allow writing and creating releases
-            packages: write   # Allow interacting with GitHub packages (if necessary)
-
         strategy:
             matrix:
                 node-version: [ 22.x ]  # Matrix for Node.js versions
@@ -51,10 +45,8 @@ jobs:
                     prerelease: false
 
             # Step 7: Upload the ZIP file as a release asset
-            -   name: Upload ZIP file to Release
-                uses: actions/upload-release-asset@v1  # Upload the ZIP file as a release asset
+            -   name: Create GitHub Release and Upload Asset
+                uses: softprops/action-gh-release@v1
                 with:
-                    upload_url: ${{ steps.create_release.outputs.upload_url }}  # Reference the upload_url from the release creation step
-                    asset_path: ./new-tab-${{ github.ref_name }}.zip  # Path to the ZIP file
-                    asset_name: new-tab-${{ github.ref_name }}.zip  # Name of the ZIP file
-                    asset_content_type: application/zip  # Content type for the ZIP file
+                    token: ${{ secrets.GITHUB_TOKEN }}  # Use the default GITHUB_TOKEN to create the release
+                    files: new-tab-${{ github.ref_name }}.zip  # Upload the ZIP file
