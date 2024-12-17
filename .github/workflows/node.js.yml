@@ -1,4 +1,4 @@
-name: Node.js CI
+name: New-Tab CI build
 
 on:
     push:
@@ -9,6 +9,11 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+
+        permissions:
+            contents: write   # Allow write permissions for the repository contents
+            actions: write    # Allow writing to actions (e.g., uploading assets)
+            packages: write   # Allow interacting with GitHub packages (if necessary)
 
         strategy:
             matrix:
