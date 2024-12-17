@@ -2,6 +2,8 @@ name: New-Tab CI build
 
 on:
     push:
+        tags:
+            - "v*.*.*"
         branches: [ "main", "1.x" ]  # Trigger on push to 'main' and '1.x' branches
     pull_request:
         branches: [ "main" ]          # Trigger on PR to 'main' branch
