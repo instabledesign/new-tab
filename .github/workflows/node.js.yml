@@ -4,39 +4,28 @@ on:
     push:
         tags:
             - "v*.*.*"
-        branches: [ "main", "1.x" ]  # Trigger on push to 'main' and '1.x' branches
-    pull_request:
-        branches: [ "main" ]          # Trigger on PR to 'main' branch
+        branches: [ "main", "1.x" ]
 
 jobs:
     build:
         runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node-version: [ 22.x ]  # Matrix for Node.js versions
-
         steps:
-            -   uses: actions/checkout@v4  # Checkout the repository
-            -   name: Use Node.js ${{ matrix.node-version }}
+            -   name: Checkout project code
+                uses: actions/checkout@v4
+
+            -   name: Use Node.js
                 uses: actions/setup-node@v4
                 with:
-                    node-version: ${{ matrix.node-version }}
-                    cache: 'npm'  # Cache npm dependencies
+                    node-version: 22
+                    cache: 'npm'
 
-            -   run: npm install   # Install dependencies
-            -   run: npm run build --if-present  # Build the project if the 'build' script exists
+            -   name: Install dependencies
+                run: npm install
 
-            # Step 5: Create ZIP File
-            -   name: Create ZIP File
-                run: |
-                    zip -r new-tab-${{ github.ref_name }}.zip ./dist  # Create zip of the 'dist' folder (make sure it's present)
-                shell: bash
-
-            # Step 7: Upload the ZIP file as a release asset
-            -   name: Create GitHub Release and Upload Asset
-                uses: softprops/action-gh-release@v2
-                if: startsWith(github.ref, 'refs/tags/')
+            -   name: Build application
+                run: npm run build --if-present
                 with:
-                    token: ${{ secrets.GITHUB_TOKEN }}  # Use the default GITHUB_TOKEN to create the release
-                    files: new-tab-${{ github.ref_name }}.zip  # Upload the ZIP file
+                    files: dist/**
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

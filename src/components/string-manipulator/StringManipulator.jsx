@@ -12,7 +12,6 @@ import {
 import {ArrowUpward, Clear} from "@mui/icons-material";
 import SimpleTransformer from "./SimpleTransformer.jsx";
 import {
-    smartPipeFunctions,
     suffix,
     prefix,
     wrap,
@@ -74,10 +73,38 @@ export default function StringManipulator() {
         {name: 'replace', component: props => <ReplaceTransformer {...props}/>},
         {name: 'split', component: props => <SingleFieldTransformer name='split' transformFn={split} {...props}/>},
         {name: 'join', component: props => <SingleFieldTransformer name='join' transformFn={join} {...props}/>},
+        {
+            name: 'base64 encode',
+            component: props => <SimpleTransformer name='base64 encode' transformFn={btoa} {...props}/>
+        },
+        {
+            name: 'base64 decode',
+            component: props => <SimpleTransformer name='base64 decode' transformFn={atob} {...props}/>
+        },
     ];
 
+    const reduceTransformations = (...transformers) => (input) => {
+        const steps = [];
+        const result = transformers.reduce((acc, transformer, index, arr) => {
+            if (!transformer.enabled) {
+                return acc;
+            }
+            const step = {step: index + 1, input: acc}
+            try {
+                step.result = Array.isArray(acc) && !transformer.transformFn.acceptsArray ? acc.map(transformer.transformFn) : transformer.transformFn(acc);
+            } catch (e) {
+                step.error = e;
+                arr.splice(1);
+            }
+            steps.push(step);
+            return step.result;
+        }, input);
+
+        return {result, steps};
+    };
+
     const applyTransformations = useCallback(
-        smartPipeFunctions(...transformations.filter(v => v.enabled).map(v => v.transformFn)),
+        reduceTransformations(...transformations),
         [transformations]
     );
 
@@ -89,6 +116,14 @@ export default function StringManipulator() {
         setTransformations((prevTransformations) => {
             const updatedTransformations = [...prevTransformations];
             updatedTransformations[index] = {...updatedTransformations[index], transformFn};
+            return updatedTransformations;
+        });
+    }, []);
+
+    const addTransformationError = useCallback((index, error) => {
+        setTransformations((prevTransformations) => {
+            const updatedTransformations = [...prevTransformations];
+            updatedTransformations[index] = {...updatedTransformations[index], error};
             return updatedTransformations;
         });
     }, []);
@@ -135,7 +170,7 @@ export default function StringManipulator() {
                             // error={error}
                         />
                         <Box sx={{display: "flex", flexDirection: "column", gap: 1, mb: 1}}>
-                            {transformations.map(({Component, enabled}, index) => (
+                            {transformations.map(({Component, enabled, error}, index) => (
                                 <Box key={index}
                                      sx={{
                                          display: 'flex',
@@ -144,11 +179,12 @@ export default function StringManipulator() {
                                          gap: 1,
                                          padding: 1,
                                          border: "1px solid lightgray",
-                                         borderColor: enabled ? 'blue' : 'lightgray',
+                                         borderColor: error ? 'red' : enabled ? 'blue' : 'lightgray',
                                          opacity: enabled ? '100%' : '50%',
                                          borderRadius: "4px",
                                      }}
                                 >
+                                    AZE {error&& error.message}
                                     <Switch onChange={() => toggleEnable(index)} checked={enabled}/>
                                     <Component
                                         onTransform={(transformFn) => handleTransformationUpdate(index, transformFn)}/>
