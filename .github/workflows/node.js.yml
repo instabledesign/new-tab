@@ -13,6 +13,7 @@ jobs:
         permissions:
             contents: write   # Allow write permissions for the repository contents
             actions: write    # Allow writing to actions (e.g., uploading assets)
+            releases: write   # Allow writing and creating releases
             packages: write   # Allow interacting with GitHub packages (if necessary)
 
         strategy:
