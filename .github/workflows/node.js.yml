@@ -1,48 +1,54 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
-  push:
-    branches: [ "main", "1.x" ]
-  pull_request:
-    branches: [ "main" ]
+    push:
+        branches: [ "main", "1.x" ]  # Trigger on push to 'main' and '1.x' branches
+    pull_request:
+        branches: [ "main" ]          # Trigger on PR to 'main' branch
 
 jobs:
-  build:
+    build:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [ 22.x ]  # Matrix for Node.js versions
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        steps:
+            -   uses: actions/checkout@v4  # Checkout the repository
+            -   name: Use Node.js ${{ matrix.node-version }}
+                uses: actions/setup-node@v4
+                with:
+                    node-version: ${{ matrix.node-version }}
+                    cache: 'npm'  # Cache npm dependencies
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install
-    - run: npm run build --if-present
-    - name: Create ZIP File
-      run: |
-        zip -r new-tab-${{ github.ref_name }}.zip ./dist
-      shell: bash
+            -   run: npm install   # Install dependencies
+            -   run: npm run build --if-present  # Build the project if the 'build' script exists
 
-    # Step 7: Upload the ZIP file as a Release asset
-    - name: Create GitHub Release
-      uses: ncipollo/release-action@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref_name }}
-        name: Release ${{ github.ref_name }}
-        body: |
-          This release includes the latest build for tag ${{ github.ref_name }}.
-        draft: false
-        prerelease: false
-        artifacts: ./new-tab-${{ github.ref_name }}.zip
-        artifact_name: new-tab-${{ github.ref_name }}.zip
+            # Step 5: Create ZIP File
+            -   name: Create ZIP File
+                run: |
+                    zip -r new-tab-${{ github.ref_name }}.zip ./dist  # Create zip of the 'dist' folder (make sure it's present)
+                shell: bash
+
+            # Step 6: Create a GitHub Release and upload the ZIP file
+            -   name: Create GitHub Release
+                id: create_release  # Give the step an id to reference it later
+                uses: ncipollo/release-action@v1
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    tag: ${{ github.ref_name }}  # Use the branch name or tag for release
+                    name: Release ${{ github.ref_name }}  # Use the branch/tag name in the release
+                    body: |
+                        This release includes the latest build for tag ${{ github.ref_name }}.
+                    draft: false
+                    prerelease: false
+
+            # Step 7: Upload the ZIP file as a release asset
+            -   name: Upload ZIP file to Release
+                uses: actions/upload-release-asset@v1  # Upload the ZIP file as a release asset
+                with:
+                    upload_url: ${{ steps.create_release.outputs.upload_url }}  # Reference the upload_url from the release creation step
+                    asset_path: ./new-tab-${{ github.ref_name }}.zip  # Path to the ZIP file
+                    asset_name: new-tab-${{ github.ref_name }}.zip  # Name of the ZIP file
+                    asset_content_type: application/zip  # Content type for the ZIP file
