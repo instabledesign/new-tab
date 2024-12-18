@@ -1,13 +1,6 @@
 import {useState, useEffect, useCallback} from "react";
 import {
-    Card,
-    CardHeader,
-    CardContent,
-    TextField,
-    Box,
-    Button,
-    Switch,
-    IconButton, Grid2
+    Card, CardHeader, CardContent, TextField, Box, Button, Switch, IconButton, Grid2
 } from "@mui/material";
 import {ArrowUpward, Clear} from "@mui/icons-material";
 import SimpleTransformer from "./SimpleTransformer.jsx";
@@ -27,6 +20,19 @@ import {
     split,
     join,
 } from "./string_functions.jsx";
+import md5 from 'crypto-js/md5';
+import sha1 from 'crypto-js/sha1';
+import sha3 from 'crypto-js/sha3.js';
+import sha224 from 'crypto-js/sha224.js';
+import sha256 from 'crypto-js/sha256.js';
+import sha384 from 'crypto-js/sha384.js';
+import sha512 from 'crypto-js/sha512.js';
+import hmacSha1 from 'crypto-js/hmac-sha1';
+import hmacSha3 from 'crypto-js/hmac-sha3.js';
+import hmacSha224 from 'crypto-js/hmac-sha224.js';
+import hmacSha256 from 'crypto-js/hmac-sha256.js';
+import hmacSha384 from 'crypto-js/hmac-sha384.js';
+import hmacSha512 from 'crypto-js/hmac-sha512.js';
 import SingleFieldTransformer from "./SingleFieldTransformer.jsx";
 import ReplaceTransformer from "./ReplaceTransformer.jsx";
 
@@ -36,51 +42,85 @@ export default function StringManipulator() {
 
     const [transformations, setTransformations] = useState([]);
 
-    const availableTransformations = [
-        {name: 'Prefix', component: props => <SingleFieldTransformer name="prefix" transformFn={prefix} {...props}/>},
-        {name: 'Suffix', component: props => <SingleFieldTransformer name="suffix" transformFn={suffix} {...props}/>},
-        {name: 'Wrap', component: props => <SingleFieldTransformer name="wrap" transformFn={wrap} {...props}/>},
-        {
-            name: 'Wrap in tags',
-            component: props => <SingleFieldTransformer name="wrapInTags" transformFn={wrapInTags} {...props}/>
-        },
-        {
-            name: 'lowercase',
-            component: props => <SimpleTransformer name="lowerCase" transformFn={toLowerCase} {...props}/>
-        },
-        {
-            name: 'UPPERCASE',
-            component: props => <SimpleTransformer name="upperCase" transformFn={toUpperCase} {...props}/>
-        },
-        {
-            name: 'camelCase',
-            component: props => <SimpleTransformer name="camelCase" transformFn={camelCase} {...props}/>
-        },
-        {
-            name: 'snake_case',
-            component: props => <SimpleTransformer name="snake_case" transformFn={snakeCase} {...props}/>
-        },
-        {
-            name: 'kebab-case',
-            component: props => <SimpleTransformer name="kebab-case" transformFn={kebabCase} {...props}/>
-        },
-        {
-            name: 'PascalCase',
-            component: props => <SimpleTransformer name="PascalCase" transformFn={pascalCase} {...props}/>
-        },
-        {name: 'dot.case', component: props => <SimpleTransformer name="dot.case" transformFn={dotCase} {...props}/>},
-        {name: 'l33t', component: props => <SimpleTransformer name="l33t" transformFn={l33tFilter} {...props}/>},
-        {name: 'replace', component: props => <ReplaceTransformer {...props}/>},
-        {name: 'split', component: props => <SingleFieldTransformer name='split' transformFn={split} {...props}/>},
-        {name: 'join', component: props => <SingleFieldTransformer name='join' transformFn={join} {...props}/>},
-        {
-            name: 'base64 encode',
-            component: props => <SimpleTransformer name='base64 encode' transformFn={btoa} {...props}/>
-        },
-        {
-            name: 'base64 decode',
-            component: props => <SimpleTransformer name='base64 decode' transformFn={atob} {...props}/>
-        },
+    const availableTransformations = [{
+        name: 'Prefix',
+        component: props => <SingleFieldTransformer name="prefix" transformFn={prefix} {...props}/>
+    }, {
+        name: 'Suffix',
+        component: props => <SingleFieldTransformer name="suffix" transformFn={suffix} {...props}/>
+    }, {name: 'Wrap', component: props => <SingleFieldTransformer name="wrap" transformFn={wrap} {...props}/>}, {
+        name: 'Wrap in tags',
+        component: props => <SingleFieldTransformer name="wrapInTags" transformFn={wrapInTags} {...props}/>
+    }, {
+        name: 'lowercase',
+        component: props => <SimpleTransformer name="lowerCase" transformFn={toLowerCase} {...props}/>
+    }, {
+        name: 'UPPERCASE',
+        component: props => <SimpleTransformer name="upperCase" transformFn={toUpperCase} {...props}/>
+    }, {
+        name: 'camelCase', component: props => <SimpleTransformer name="camelCase" transformFn={camelCase} {...props}/>
+    }, {
+        name: 'snake_case',
+        component: props => <SimpleTransformer name="snake_case" transformFn={snakeCase} {...props}/>
+    }, {
+        name: 'kebab-case',
+        component: props => <SimpleTransformer name="kebab-case" transformFn={kebabCase} {...props}/>
+    }, {
+        name: 'PascalCase',
+        component: props => <SimpleTransformer name="PascalCase" transformFn={pascalCase} {...props}/>
+    }, {
+        name: 'dot.case',
+        component: props => <SimpleTransformer name="dot.case" transformFn={dotCase} {...props}/>
+    }, {
+        name: 'l33t',
+        component: props => <SimpleTransformer name="l33t" transformFn={l33tFilter} {...props}/>
+    }, {name: 'replace', component: props => <ReplaceTransformer {...props}/>}, {
+        name: 'split',
+        component: props => <SingleFieldTransformer name='split' transformFn={split} {...props}/>
+    }, {name: 'join', component: props => <SingleFieldTransformer name='join' transformFn={join} {...props}/>}, {
+        name: 'base64 encode',
+        component: props => <SimpleTransformer name='base64 encode' transformFn={btoa} {...props}/>
+    }, {
+        name: 'base64 decode',
+        component: props => <SimpleTransformer name='base64 decode' transformFn={atob} {...props}/>
+    }, {
+        name: 'md5', component: props => <SimpleTransformer name='md5' transformFn={md5} {...props}/>
+    }, {
+        name: 'sha1', component: props => <SimpleTransformer name='sha1' transformFn={sha1} {...props}/>
+    }, {
+        name: 'sha3', component: props => <SimpleTransformer name='sha3' transformFn={sha3} {...props}/>
+    }, {
+        name: 'sha224', component: props => <SimpleTransformer name='sha224' transformFn={sha224} {...props}/>
+    }, {
+        name: 'sha256', component: props => <SimpleTransformer name='sha256' transformFn={sha256} {...props}/>
+    }, {
+        name: 'sha384', component: props => <SimpleTransformer name='sha384' transformFn={sha384} {...props}/>
+    }, {
+        name: 'sha512', component: props => <SimpleTransformer name='sha512' transformFn={sha512} {...props}/>
+    }, // {
+        //     name: 'hmacSha1',
+        //     component: props => <SimpleTransformer name='hmacSha1' transformFn={hmacSha1} {...props}/>
+        // },
+        // {
+        //     name: 'hmacSha3',
+        //     component: props => <SimpleTransformer name='hmacSha3' transformFn={hmacSha3} {...props}/>
+        // },
+        // {
+        //     name: 'hmacSha224',
+        //     component: props => <SimpleTransformer name='hmacSha224' transformFn={hmacSha224} {...props}/>
+        // },
+        // {
+        //     name: 'hmacSha256',
+        //     component: props => <SimpleTransformer name='hmacSha256' transformFn={hmacSha256} {...props}/>
+        // },
+        // {
+        //     name: 'hmacSha384',
+        //     component: props => <SimpleTransformer name='hmacSha384' transformFn={hmacSha384} {...props}/>
+        // },
+        // {
+        //     name: 'hmacSha512',
+        //     component: props => <SimpleTransformer name='hmacSha512' transformFn={hmacSha512} {...props}/>
+        // },
     ];
 
     const reduceTransformations = (...transformers) => (input) => {
@@ -103,10 +143,7 @@ export default function StringManipulator() {
         return {result, steps};
     };
 
-    const applyTransformations = useCallback(
-        reduceTransformations(...transformations),
-        [transformations]
-    );
+    const applyTransformations = useCallback(reduceTransformations(...transformations), [transformations]);
 
     const handleAddTransformation = (Component) => {
         setTransformations([...transformations, {enabled: true, Component, transformFn: (text) => text}]);
@@ -129,15 +166,11 @@ export default function StringManipulator() {
     }, []);
 
     const toggleEnable = (index) => {
-        setTransformations((prev) =>
-            prev.map((item, i) => (i === index ? {...item, enabled: !item.enabled} : item))
-        );
+        setTransformations((prev) => prev.map((item, i) => (i === index ? {...item, enabled: !item.enabled} : item)));
     };
 
     const deleteFunction = (index) => {
-        setTransformations((prev) =>
-            prev.filter((_, i) => i !== index)
-        );
+        setTransformations((prev) => prev.filter((_, i) => i !== index));
     };
 
     useEffect(() => {
@@ -184,7 +217,6 @@ export default function StringManipulator() {
                                          borderRadius: "4px",
                                      }}
                                 >
-                                    AZE {error&& error.message}
                                     <Switch onChange={() => toggleEnable(index)} checked={enabled}/>
                                     <Component
                                         onTransform={(transformFn) => handleTransformationUpdate(index, transformFn)}/>
@@ -192,8 +224,8 @@ export default function StringManipulator() {
                                                 onClick={() => deleteFunction(index)}>
                                         <Clear/>
                                     </IconButton>
-                                </Box>
-                            ))}
+                                </Box>)
+                            )}
                         </Box>
                         <Box>
                             <TextField
