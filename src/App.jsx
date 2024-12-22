@@ -1,5 +1,5 @@
 import {Grid2} from "@mui/material";
-import StringManipulator from "./components/string-manipulator/StringManipulator.jsx";
+import {StringManipulator} from "./components/StringManipulator";
 
 function App() {
     return (

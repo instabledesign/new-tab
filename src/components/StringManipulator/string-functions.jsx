@@ -16,6 +16,9 @@ export const smartPipeFunctions = (...functions) => (input) => {
     return {result, steps};
 };
 
+export const base64Encode = v => btoa(v);
+export const base64Decode = v => atob(v);
+
 export const suffix = s => str => str + s;
 export const prefix = p => str => p + str;
 export const wrap = w => str => w + str + w;
@@ -41,7 +44,7 @@ export const camelCase = str => str
 
 export const pascalCase = str => str
     .replace(/[^a-zA-Z0-9]+(.)/g, (match, group1) => group1.toUpperCase()) // Convert non-alphanumeric characters to uppercase
-    .replace(/^([A-Z])/, (match, group1) => group1.toUpperCase());         // Ensure the first character is uppercase
+    .replace(/^([a-zA-Z])/, (match, group1) => group1.toUpperCase());         // Ensure the first character is uppercase
 
 export const snakeCase = str => str
     .replace(/([a-z])([A-Z])/g, '$1_$2') // Convert camelCase or PascalCase to snake_case
