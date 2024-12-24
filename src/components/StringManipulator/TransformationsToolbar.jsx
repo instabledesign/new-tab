@@ -40,83 +40,83 @@ import WrapInTagsTransformer from "./WrapInTagsTransformer.jsx";
 export default function TransformationsToolbar({handleAddTransformation}) {
     return (
         <Box>
-            <ButtonGroup variant="text">
+            <ButtonGroup variant="outlined" size="small">
                 <Tooltip title="Add prefix">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <SingleFieldTransformer name="prefix"
                                                                                                 transformFn={prefix} {...props}/>)}>
                         <PrefixIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="Add suffix">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <SingleFieldTransformer name="suffix"
                                                                                                 transformFn={suffix} {...props}/>)}>
                         <SuffixIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="Wrap with text">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <SingleFieldTransformer name="wrap"
                                                                                                 transformFn={wrap} {...props}/>)}>
                         <WrapIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="Wrap with tag">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <WrapInTagsTransformer {...props}/>)}>
                         <WrapTagsIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
 
                 <Divider orientation="vertical" flexItem/>
 
                 <Tooltip title="lowercase">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <LowercaseTransformer {...props}/>)}>
                         <LowercaseIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="UPPERCASE">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <UppercaseTransformer {...props}/>)}>
                         <UppercaseIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="camelCase">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="camelCase"
                                                                                            transformFn={camelCase} {...props}/>)}>
                         <CamelCaseIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="snake_case">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="snake_case"
                                                                                            transformFn={snakeCase} {...props}/>)}>
                         <SnakeCaseIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="kebab-case">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="kebab-case"
                                                                                            transformFn={kebabCase} {...props}/>)}>
                         <KebabCaseIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="pascalCase">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="PascalCase"
                                                                                            transformFn={pascalCase} {...props}/>)}>
                         <PascalCaseIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
                 <Tooltip title="dot.case">
-                    <IconButton
+                    <Button
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="dot.case"
                                                                                            transformFn={dotCase} {...props}/>)}>
                         <DotCaseIcon/>
-                    </IconButton>
+                    </Button>
                 </Tooltip>
 
 
