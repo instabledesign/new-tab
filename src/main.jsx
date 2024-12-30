@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import theme from './theme';
 import './index.css'
+import './serviceWorker.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

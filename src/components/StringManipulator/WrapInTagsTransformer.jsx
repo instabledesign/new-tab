@@ -19,7 +19,7 @@ export default function WrapInTagsTransformer({onTransform}) {
             const regex = /([a-zA-Z0-9]+)(\.([a-zA-Z0-9\s\-]+))?(#([a-zA-Z0-9\-]+))?(\{([a-zA-Z0-9\-]+:[a-zA-Z0-9\s\-]+)\})?(\>([a-zA-Z0-9]+))?/;
 
             const match = pattern.match(regex);
-            console.log("MATCH", match);
+
             if (!match) {
                 throw new Error('Invalid pattern format');
             }

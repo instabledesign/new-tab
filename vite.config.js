@@ -10,11 +10,17 @@ export default defineConfig({
             targets: [
                 {
                     src: [
-                        'node_modules/php-wasm/php-web.mjs.wasm',
-                        'node_modules/php-wasm/libxml2.so'
+                        'node_modules/monaco-themes/themes',
                     ],
-                    dest: 'assets',
+                    dest: 'assets/monaco-themes/',
                 },
+                // {
+                //     src: [
+                //         'node_modules/php-wasm/php-web.mjs.wasm',
+                //         'node_modules/php-wasm/libxml2.so'
+                //     ],
+                //     dest: 'assets',
+                // },
             ],
         }),
         {

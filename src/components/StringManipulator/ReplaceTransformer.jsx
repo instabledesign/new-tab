@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {Checkbox, FormControlLabel, Icon, TextField} from "@mui/material";
-import { green } from '@mui/material/colors';
+import {green} from '@mui/material/colors';
 import {Help, Info} from "@mui/icons-material";
 
 /**
@@ -42,7 +42,8 @@ export default function ReplaceTransformer({onTransform}) {
                 value={replace}
                 onChange={(event) => setReplace(event.target.value)}
             />
-            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace" target="_blank"><Help sx={{ color: green[500], align:'left' }}/></a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace"
+               target="_blank"><Help sx={{color: green[500], align: 'left'}}/></a>
         </>
     );
 }
