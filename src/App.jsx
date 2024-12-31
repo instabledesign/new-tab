@@ -9,7 +9,7 @@ import {
     ListItemIcon,
     ListItemText, styled
 } from "@mui/material";
-import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Link, Route, Routes} from "react-router-dom";
 import Settings from "./pages/Settings.jsx";
 import React from "react";
 
@@ -79,7 +79,7 @@ export default function App() {
 
     return (
         <Box sx={{display: 'flex'}}>
-            <BrowserRouter>
+            <HashRouter>
                 <Drawer
                     variant="permanent"
                     open={open}
@@ -116,7 +116,7 @@ export default function App() {
                         <Route path="settings" element={<Settings/>}/>
                     </Routes>
                 </Box>
-            </BrowserRouter>
+            </HashRouter>
         </Box>
     );
 }
