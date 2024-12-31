@@ -1,13 +1,4 @@
-import {Box, Button, ButtonGroup, Divider, IconButton, Tooltip} from "@mui/material";
-import {
-    CamelCaseIcon, DotCaseIcon, KebabCaseIcon,
-    LowercaseIcon, PascalCaseIcon,
-    PrefixIcon, SnakeCaseIcon,
-    SuffixIcon,
-    UppercaseIcon,
-    WrapIcon,
-    WrapTagsIcon
-} from "../../icons/index.jsx";
+import {Box, Button, Divider, Tooltip} from "@mui/material";
 import SingleFieldTransformer from "./SingleFieldTransformer.jsx";
 import {
     base64Decode,
@@ -17,9 +8,7 @@ import {
     prefix,
     snakeCase, split,
     suffix,
-    toUpperCase,
     wrap,
-    wrapInTags
 } from "./string-functions.jsx";
 import md5 from "crypto-js/md5.js";
 import sha1 from "crypto-js/sha1.js";
@@ -43,32 +32,35 @@ export default function TransformationsToolbar({handleAddTransformation}) {
             display: "flex",
             flexWrap: "wrap",
             gap: 1,
+            '& > button': {
+                textTransform: 'none',
+            },
         }}>
             <Tooltip title="Add prefix">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <SingleFieldTransformer name="prefix"
                                                                                                 transformFn={prefix} {...props}/>)}>
-                    <PrefixIcon/>
+                    ..T
                 </Button>
             </Tooltip>
             <Tooltip title="Add suffix">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <SingleFieldTransformer name="suffix"
                                                                                                 transformFn={suffix} {...props}/>)}>
-                    <SuffixIcon/>
+                    T..
                 </Button>
             </Tooltip>
             <Tooltip title="Wrap with text">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <SingleFieldTransformer name="wrap"
                                                                                                 transformFn={wrap} {...props}/>)}>
-                    <WrapIcon/>
+                    ..T..
                 </Button>
             </Tooltip>
             <Tooltip title="Wrap with tag">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <WrapInTagsTransformer {...props}/>)}>
-                    <WrapTagsIcon/>
+                    &lt;T&gt;
                 </Button>
             </Tooltip>
 
@@ -77,48 +69,48 @@ export default function TransformationsToolbar({handleAddTransformation}) {
             <Tooltip title="lowercase">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <LowercaseTransformer {...props}/>)}>
-                    <LowercaseIcon/>
+                    T&gt;t
                 </Button>
             </Tooltip>
             <Tooltip title="UPPERCASE">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <UppercaseTransformer {...props}/>)}>
-                    <UppercaseIcon/>
+                    t&gt;T
                 </Button>
             </Tooltip>
             <Tooltip title="camelCase">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="camelCase"
                                                                                            transformFn={camelCase} {...props}/>)}>
-                    <CamelCaseIcon/>
+                    cCc
                 </Button>
             </Tooltip>
             <Tooltip title="snake_case">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="snake_case"
                                                                                            transformFn={snakeCase} {...props}/>)}>
-                    <SnakeCaseIcon/>
+                    a_a
                 </Button>
             </Tooltip>
             <Tooltip title="kebab-case">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="kebab-case"
                                                                                            transformFn={kebabCase} {...props}/>)}>
-                    <KebabCaseIcon/>
+                    a-a
                 </Button>
             </Tooltip>
             <Tooltip title="pascalCase">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="PascalCase"
                                                                                            transformFn={pascalCase} {...props}/>)}>
-                    <PascalCaseIcon/>
+                    Aa
                 </Button>
             </Tooltip>
             <Tooltip title="dot.case">
                 <Button variant="outlined"
                         onClick={() => handleAddTransformation(props => <SimpleTransformer name="dot.case"
                                                                                            transformFn={dotCase} {...props}/>)}>
-                    <DotCaseIcon/>
+                    a.a
                 </Button>
             </Tooltip>
 
