@@ -1,20 +1,19 @@
-import useLocalStorage from "../useLocalStorage.jsx";
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import {
     Alert,
-    Box, FormControl, FormControlLabel,
+    Box,
     Grid2, InputLabel,
-    MenuItem, Paper,
+    MenuItem,
     Select,
-    Slider, Stack, styled,
+    Slider, Stack,
     TextField,
 } from "@mui/material";
-import QRCodeLib from "qrcode";
 import QRCode from "./QRCode.jsx";
+import {useStateFromNewTabConfig, useStateFromNewTabHistory} from "../useStateNewTab.jsx";
 
 export default function QRCodeTool() {
-    const [inputData, setInputData] = useLocalStorage('QRCode-input', '👋');
-    const [QRCodeOptions, setQRCodeOptions] = useLocalStorage('QRCode-options', {
+    const [inputData, setInputData] = useStateFromNewTabHistory('QRCode.input', '👋');
+    const [QRCodeOptions, setQRCodeOptions] = useStateFromNewTabConfig('QRCode.options', {
         margin: 1,
         errorCorrectionLevel: 'M',
         color: {

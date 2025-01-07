@@ -11,10 +11,10 @@ import {
     Clear,
 } from "@mui/icons-material";
 import TransformationsToolbar from "./TransformationsToolbar.jsx";
-import useLocalStorage from "../useLocalStorage.jsx";
+import {useStateFromNewTabHistory} from "../useStateNewTab.jsx";
 
 export default function StringManipulatorTool() {
-    const [inputData, setInputData] = useLocalStorage('StringManipulator-input', '');
+    const [inputData, setInputData] = useStateFromNewTabHistory('StringManipulator.input', '');
     const [outputData, setOutputData] = useState('');
 
     const [transformations, setTransformations] = useState([]);

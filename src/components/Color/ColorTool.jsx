@@ -4,8 +4,8 @@ import {
 } from "@mui/material";
 import {ColorPicker, useColor} from "react-color-palette";
 import "react-color-palette/css";
-import usePersistentLimitedArray from "../usePersistentLimitedArray.js";
 import {DeleteForever} from "@mui/icons-material";
+import {useStateFromNewTabHistoryLimitedArray} from "../useStateNewTab.jsx";
 
 //https://d3-graph-gallery.com/graph/custom_color.html
 export default function ColorTool({startColor = "last", historyLength = 0}) {
@@ -13,7 +13,7 @@ export default function ColorTool({startColor = "last", historyLength = 0}) {
         historyLength = 10;
     }
 
-    const [colorHistory, addColorHistory, removeColorHistory, clearColorHistory] = usePersistentLimitedArray('ColorTool-history', [], historyLength);
+    const [colorHistory, addColorHistory, removeColorHistory, clearColorHistory] = useStateFromNewTabHistoryLimitedArray('ColorTool.history', [], historyLength);
 
     const [color, setColor] = useColor(undefined !== colorHistory[0] ? colorHistory[0].hex : "#ffffff");
 

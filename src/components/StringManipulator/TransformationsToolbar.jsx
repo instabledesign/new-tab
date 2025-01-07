@@ -25,7 +25,6 @@ import WrapInTagsTransformer from "./WrapInTagsTransformer.jsx";
 
 
 // @TODO implement hmacSha1 ,hmacSha3 ,hmacSha224 ,hmacSha256 ,hmacSha384 ,hmacSha512
-
 export default function TransformationsToolbar({handleAddTransformation}) {
     return (
         <Box sx={{

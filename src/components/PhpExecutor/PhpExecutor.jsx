@@ -1,6 +1,5 @@
 import {
     Box,
-    Card, CardContent, CardHeader,
     Grid2,
 } from "@mui/material";
 import {useEffect, useState} from "react";

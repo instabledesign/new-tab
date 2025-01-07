@@ -1,17 +1,17 @@
 import * as monaco from "monaco-editor";
 import {Editor, loader} from "@monaco-editor/react";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import hljs from 'highlight.js';
-import {Box, Button, MenuItem, Select} from "@mui/material";
+import {Box, MenuItem, Select} from "@mui/material";
 import themeList from "monaco-themes/themes/themelist.json";
-import useLocalStorage from "../useLocalStorage.jsx";
+import {useStateFromNewTabConfig, useStateFromNewTabHistory} from "../useStateNewTab.jsx";
 
 loader.config({monaco});
 
 export default function TextEditorTool() {
-    const [code, setCode] = useLocalStorage('TextEditor-code', '<?php echo "Hello, World!";');
-    const [language, setLanguage] = useLocalStorage('TextEditor-language', 'auto-detect');
-    const [theme, setTheme] = useLocalStorage('TextEditor-theme', 'vs-dark');
+    const [code, setCode] = useStateFromNewTabHistory('TextEditor.code', '<?php echo "Hello, World!";');
+    const [language, setLanguage] = useStateFromNewTabConfig('TextEditor.language', 'auto-detect');
+    const [theme, setTheme] = useStateFromNewTabConfig('TextEditor.theme', 'vs-dark');
     const editorRef = useRef(null);
 
     const loadTheme = (theme) => fetch(`assets/monaco-themes/themes/${themeList[theme]}.json`).then(res => {
@@ -91,6 +91,7 @@ export default function TextEditorTool() {
                 ))}
             </Select>
             <Editor
+                theme={theme}
                 height="500px"
                 defaultLanguage="php"
                 defaultValue="<?php // Start coding here!"
