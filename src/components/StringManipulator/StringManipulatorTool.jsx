@@ -13,7 +13,7 @@ import {
 import TransformationsToolbar from "./TransformationsToolbar.jsx";
 import useLocalStorage from "../useLocalStorage.jsx";
 
-export default function StringManipulator() {
+export default function StringManipulatorTool() {
     const [inputData, setInputData] = useLocalStorage('StringManipulator-input', '');
     const [outputData, setOutputData] = useState('');
 

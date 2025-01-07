@@ -1,6 +1,5 @@
 import {
     Box, Button,
-    Card, CardContent,
     Grid2, IconButton, Tooltip,
 } from "@mui/material";
 import {ColorPicker, useColor} from "react-color-palette";

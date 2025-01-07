@@ -8,7 +8,7 @@ import useLocalStorage from "../useLocalStorage.jsx";
 
 loader.config({monaco});
 
-export default function TextEditor() {
+export default function TextEditorTool() {
     const [code, setCode] = useLocalStorage('TextEditor-code', '<?php echo "Hello, World!";');
     const [language, setLanguage] = useLocalStorage('TextEditor-language', 'auto-detect');
     const [theme, setTheme] = useLocalStorage('TextEditor-theme', 'vs-dark');

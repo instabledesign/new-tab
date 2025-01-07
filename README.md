@@ -36,10 +36,18 @@ String functions:
 - `base64 encode`, `base64 decode`
 - `md5`, `sha1`, `sha3`, `sha224`, `sha256`, `sha384`, `sha512`
 
-## Color picker Tool [🔗 Source](/src/components/ColorTool/ColorTool.jsx)
+## QRCode Tool [🔗 Source](/src/components/QRCode/QRCodeTool.jsx)
+
+QRcode tool allow you to generate a QR code with some options
+
+powered by  : https://github.com/soldair/node-qrcode
+
+## Color picker Tool [🔗 Source](/src/components/Color/ColorTool.jsx)
 
 Just a simple color picker with history.
 
-## Text editor Tool [🔗 Source](/src/components/TextEditor/TextEditor.jsx)
+powered by  : https://github.com/Wondermarin/react-color-palette
+
+## Text editor Tool [🔗 Source](/src/components/TextEditor/TextEditorTool.jsx)
 
 A text editor powered by [Monaco Editor](https://microsoft.github.io/monaco-editor/)
